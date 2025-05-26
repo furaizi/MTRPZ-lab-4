@@ -132,5 +132,5 @@
 
 ## Діаграма
 
-![[./static/mtrpz-lab-4.drawio.png]]
+![./static/mtrpz-lab-4.drawio.png]
 
