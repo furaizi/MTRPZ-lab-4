@@ -142,5 +142,5 @@
 
 ## Діаграма
 
-![[mtrpz-lab-4.drawio.png]]
+![diagram](./static/mtrpz-lab-4.drawio.png)
 
