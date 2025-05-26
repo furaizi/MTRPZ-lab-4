@@ -61,6 +61,16 @@
 - **Redirects users** - перенаправляє з коротких URL на оригінальні довгі URL
 - **Processes analytics** - збирає та обробляє статистику використання
 
+#### API Schema
+
+| Method | Path                | Request Body                  | Response Body                                        | Description                           |
+| ------ | ------------------- | ----------------------------- | ---------------------------------------------------- | ------------------------------------- |
+| POST   | `/links`            | `{ "url": "<original_url>" }` | `{ "id": "<link_id>", "shortUrl": "<short_url>" }`   | Створення нового короткого посилання  |
+| GET    | `/{code}`           | —                             | 302 Redirect to `<original_url>`                     | Перенаправлення за коротким кодом     |
+| GET    | `/links/{id}`       | —                             | `{ "id": "<link_id>", "url": "<original_url>" }`     | Отримання деталей короткого посилання |
+| GET    | `/links/{id}/stats` | —                             | `{ "clicks": <number>, "createdAt": "<timestamp>" }` | Отримання статистики переходів        |
+| DELETE | `/links/{id}`       | —                             | 204 No Content                                       | Видалення короткого посилання         |
+
 ### Data Storage Subsystem
 
 **Що зберігає підсистема:**
