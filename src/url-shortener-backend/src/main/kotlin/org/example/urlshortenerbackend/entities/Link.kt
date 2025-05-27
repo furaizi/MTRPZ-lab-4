@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 class Link(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var linkId: Long,
+    var id: Long,
 
     @Column(length = 8, nullable = false, unique = true)
     var shortCode: String,
