@@ -1,4 +1,4 @@
-package org.example.urlshortenerbackend.services
+package org.example.urlshortenerbackend.services.linkstatistics
 
 import org.example.urlshortenerbackend.dtos.LinkStatistics
 

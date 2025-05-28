@@ -1,4 +1,4 @@
-package org.example.urlshortenerbackend.services
+package org.example.urlshortenerbackend.services.link
 
 import org.example.urlshortenerbackend.config.ClickEvent
 import org.example.urlshortenerbackend.dtos.CreateLinkRequest
