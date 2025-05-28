@@ -32,7 +32,6 @@ class KafkaConfig(
 
 data class ClickEvent(
     val shortCode: String,
-    val linkId: String,
     val timestamp: Long,
     val ip: String,
     val userAgent: String
