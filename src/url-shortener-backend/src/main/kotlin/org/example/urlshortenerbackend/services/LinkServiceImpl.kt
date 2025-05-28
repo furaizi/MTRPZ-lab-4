@@ -9,22 +9,22 @@ import org.springframework.stereotype.Service
 
 @Service
 class LinkServiceImpl(
-    private val linkRepository: LinkRepository,
-    private val linkMapper: LinkMapper,
+    private val repo: LinkRepository,
+    private val mapper: LinkMapper,
     private val shortCodeGenerator: ShortCodeGenerator
 ): LinkService {
 
     override fun createLink(request: CreateLinkRequest): LinkResponse {
         val shortCode = shortCodeGenerator.generate()
-        val linkEntity = linkMapper.toEntity(dto = request, shortCode)
-        val savedLink = linkRepository.save(linkEntity)
-        return linkMapper.toLinkResponse(savedLink, url = "replace this by real url")
+        val linkEntity = mapper.toEntity(dto = request, shortCode)
+        val savedLink = repo.save(linkEntity)
+        return mapper.toLinkResponse(savedLink, url = "replace this by real url")
     }
 
     override fun getLinkInfo(shortCode: String): LinkResponse {
-        val link = linkRepository.findByShortCode(shortCode)
+        val link = repo.findByShortCode(shortCode)
             ?: throw NoSuchElementException("Link with short code $shortCode not found")
-        return linkMapper.toLinkResponse(link, url = "replace this by real url")
+        return mapper.toLinkResponse(link, url = "replace this by real url")
     }
 
     override fun resolveLink(shortCode: String): String {
@@ -32,6 +32,7 @@ class LinkServiceImpl(
     }
 
     override fun deleteLink(shortCode: String): Boolean {
-        TODO("Not yet implemented")
+        val deletedLinksCount = repo.deleteByShortCode(shortCode)
+        return deletedLinksCount > 0
     }
 }
