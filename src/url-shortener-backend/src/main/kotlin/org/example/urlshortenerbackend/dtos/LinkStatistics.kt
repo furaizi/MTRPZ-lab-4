@@ -2,7 +2,7 @@ package org.example.urlshortenerbackend.dtos
 
 import java.time.LocalDateTime
 
-data class LinkStats(
+data class LinkStatistics(
     val shortCode: String,
     val clicks: Long,
     val uniqueVisitors: Long,
