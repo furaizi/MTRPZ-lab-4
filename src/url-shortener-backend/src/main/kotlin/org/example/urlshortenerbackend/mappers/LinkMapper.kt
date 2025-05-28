@@ -14,5 +14,5 @@ interface LinkMapper {
     fun toEntity(dto: CreateLinkRequest, shortCode: String): Link
 
     fun toLinkResponse(link: Link, url: String): LinkResponse
-    fun toLinkStats(link: Link): LinkStatistics
+    fun toLinkStatistics(link: Link): LinkStatistics
 }
