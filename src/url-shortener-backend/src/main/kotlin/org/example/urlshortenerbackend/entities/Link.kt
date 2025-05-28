@@ -7,19 +7,20 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Version
 import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
 
 @Entity
 class Link(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var linkId: Long,
+    val linkId: Long,
 
     @Column(length = 8, nullable = false, unique = true)
-    var shortCode: String,
+    val shortCode: String,
 
     @Column(nullable = false)
-    var originalUrl: String,
+    val originalUrl: String,
 
     var clicks: Long = 0L,
 
@@ -34,8 +35,9 @@ class Link(
 
     @CreationTimestamp
     @Column(updatable = false)
-    var createdAt: LocalDateTime? = null,
+    val createdAt: LocalDateTime? = null,
     // nullable because it will be set automatically on creation by Hibernate
+    @UpdateTimestamp
     var updatedAt: LocalDateTime? = null,
 
     // Optimistic lock for concurrent updates of "clicks"
