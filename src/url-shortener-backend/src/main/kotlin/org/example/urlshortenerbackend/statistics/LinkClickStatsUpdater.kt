@@ -1,5 +1,6 @@
 package org.example.urlshortenerbackend.statistics
 
+import org.example.urlshortenerbackend.config.KafkaProperties
 import org.example.urlshortenerbackend.repositories.LinkRepository
 import org.example.urlshortenerbackend.statistics.uniqueipstore.UniqueIpStore
 import org.springframework.kafka.annotation.KafkaListener
@@ -12,15 +13,11 @@ import java.time.ZoneId
 @Component
 class LinkClickStatsUpdater(
     private val repo: LinkRepository,
-    private val uniqueStore: UniqueIpStore
+    private val uniqueStore: UniqueIpStore,
 ) {
 
     @Transactional
-    @KafkaListener(
-        topics = ["link-clicks"],
-        batch = "true",
-        containerFactory = "kafkaBatchFactory"
-    )
+    @KafkaListener(topics = ["\${app.kafka.topics.linkClicked}"])
     fun onClick(events: List<LinkClickedEvent>) {
         events.groupBy { it.shortCode }.forEach { (code, list) ->
             repo.bulkIncrementStats(

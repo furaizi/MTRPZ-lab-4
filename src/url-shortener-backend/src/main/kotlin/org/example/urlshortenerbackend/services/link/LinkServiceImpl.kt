@@ -1,5 +1,6 @@
 package org.example.urlshortenerbackend.services.link
 
+import org.example.urlshortenerbackend.config.KafkaProperties
 import org.example.urlshortenerbackend.dtos.CreateLinkRequest
 import org.example.urlshortenerbackend.dtos.LinkResponse
 import org.example.urlshortenerbackend.mappers.LinkMapper
@@ -15,7 +16,8 @@ class LinkServiceImpl(
     private val repo: LinkRepository,
     private val mapper: LinkMapper,
     private val shortCodeGenerator: ShortCodeGenerator,
-    private val kafka: KafkaTemplate<String, LinkClickedEvent>
+    private val kafka: KafkaTemplate<String, LinkClickedEvent>,
+    private val kafkaProps: KafkaProperties
 ): LinkService {
 
     @Transactional
@@ -38,7 +40,7 @@ class LinkServiceImpl(
             ?: throw NoSuchElementException("Link with short code $shortCode not found")
 
         kafka.send(
-            "link-clicks",
+            kafkaProps.topics.linkClicked,
             shortCode,
             LinkClickedEvent(shortCode, System.currentTimeMillis(), ip, userAgent)
         )

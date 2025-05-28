@@ -18,3 +18,8 @@ spring:
       type: batch
       ack-mode: batch
       concurrency: 3
+
+app:
+  kafka:
+    topics:
+      link-clicked: link-clicked
