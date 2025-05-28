@@ -1,7 +1,6 @@
 package org.example.urlshortenerbackend.statistics
 
 import jakarta.transaction.Transactional
-import org.example.urlshortenerbackend.config.ClickEvent
 import org.example.urlshortenerbackend.repositories.LinkRepository
 import org.example.urlshortenerbackend.statistics.uniqueipstore.UniqueIpStore
 import org.springframework.kafka.annotation.KafkaListener

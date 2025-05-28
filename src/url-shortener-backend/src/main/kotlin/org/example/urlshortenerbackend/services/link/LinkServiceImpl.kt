@@ -1,10 +1,10 @@
 package org.example.urlshortenerbackend.services.link
 
-import org.example.urlshortenerbackend.config.ClickEvent
 import org.example.urlshortenerbackend.dtos.CreateLinkRequest
 import org.example.urlshortenerbackend.dtos.LinkResponse
 import org.example.urlshortenerbackend.mappers.LinkMapper
 import org.example.urlshortenerbackend.repositories.LinkRepository
+import org.example.urlshortenerbackend.statistics.ClickEvent
 import org.example.urlshortenerbackend.utils.ShortCodeGenerator
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
