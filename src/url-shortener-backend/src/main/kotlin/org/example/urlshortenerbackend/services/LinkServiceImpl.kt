@@ -18,11 +18,13 @@ class LinkServiceImpl(
         val shortCode = shortCodeGenerator.generate()
         val linkEntity = linkMapper.toEntity(dto = request, shortCode)
         val savedLink = linkRepository.save(linkEntity)
-        return linkMapper.toLinkResponse(savedLink, request.url)
+        return linkMapper.toLinkResponse(savedLink, url = "replace this by real url")
     }
 
     override fun getLinkInfo(shortCode: String): LinkResponse {
-        TODO("Not yet implemented")
+        val link = linkRepository.findByShortCode(shortCode)
+            ?: throw NoSuchElementException("Link with short code $shortCode not found")
+        return linkMapper.toLinkResponse(link, url = "replace this by real url")
     }
 
     override fun resolveLink(shortCode: String): String {
