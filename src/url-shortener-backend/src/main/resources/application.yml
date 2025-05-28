@@ -20,6 +20,8 @@ spring:
       concurrency: 3
 
 app:
+  server:
+    url: ${APP_SERVER_URL}
   kafka:
     topics:
       link-clicked: link-clicked

@@ -7,6 +7,7 @@ import org.example.urlshortenerbackend.mappers.LinkMapper
 import org.example.urlshortenerbackend.repositories.LinkRepository
 import org.example.urlshortenerbackend.statistics.LinkClickedEvent
 import org.example.urlshortenerbackend.utils.ShortCodeGenerator
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -17,7 +18,9 @@ class LinkServiceImpl(
     private val mapper: LinkMapper,
     private val shortCodeGenerator: ShortCodeGenerator,
     private val kafka: KafkaTemplate<String, LinkClickedEvent>,
-    private val kafkaProps: KafkaProperties
+    private val kafkaProps: KafkaProperties,
+    @Value("\${app.server.url}")
+    private val baseUrl: String
 ): LinkService {
 
     @Transactional
@@ -25,14 +28,16 @@ class LinkServiceImpl(
         val shortCode = shortCodeGenerator.generate()
         val linkEntity = mapper.toEntity(dto = request, shortCode)
         val savedLink = repo.save(linkEntity)
-        return mapper.toLinkResponse(savedLink, url = "replace this by real url")
+        val shortUrl = buildShortUrl(shortCode)
+        return mapper.toLinkResponse(savedLink, url = shortUrl)
     }
 
     @Transactional(readOnly = true)
     override fun getLinkInfo(shortCode: String): LinkResponse {
         val link = repo.findByShortCode(shortCode)
             ?: throw NoSuchElementException("Link with short code $shortCode not found")
-        return mapper.toLinkResponse(link, url = "replace this by real url")
+        val shortUrl = buildShortUrl(shortCode)
+        return mapper.toLinkResponse(link, url = shortUrl)
     }
 
     override fun resolveLink(shortCode: String, ip: String, userAgent: String): String {
@@ -53,4 +58,6 @@ class LinkServiceImpl(
         val deletedLinksCount = repo.deleteByShortCode(shortCode)
         return deletedLinksCount > 0
     }
+
+    private fun buildShortUrl(shortCode: String): String = "${baseUrl.trimEnd('/')}/$shortCode"
 }
