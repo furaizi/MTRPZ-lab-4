@@ -12,8 +12,8 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: org.example.urlshortenerbackend.config
-        spring.json.value.default.type: org.example.urlshortenerbackend.config.ClickEvent
+        spring.json.trusted.packages: org.example.urlshortenerbackend.statistics
+        spring.json.value.default.type: org.example.urlshortenerbackend.statistics.LinkClickedEvent
     listener:
       type: batch
       ack-mode: batch

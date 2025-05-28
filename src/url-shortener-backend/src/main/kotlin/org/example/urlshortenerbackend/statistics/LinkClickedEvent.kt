@@ -1,6 +1,6 @@
 package org.example.urlshortenerbackend.statistics
 
-data class ClickEvent(
+data class LinkClickedEvent(
     val shortCode: String,
     val timestamp: Long,
     val ip: String,

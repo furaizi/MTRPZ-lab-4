@@ -4,7 +4,7 @@ import org.example.urlshortenerbackend.dtos.CreateLinkRequest
 import org.example.urlshortenerbackend.dtos.LinkResponse
 import org.example.urlshortenerbackend.mappers.LinkMapper
 import org.example.urlshortenerbackend.repositories.LinkRepository
-import org.example.urlshortenerbackend.statistics.ClickEvent
+import org.example.urlshortenerbackend.statistics.LinkClickedEvent
 import org.example.urlshortenerbackend.utils.ShortCodeGenerator
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
@@ -15,7 +15,7 @@ class LinkServiceImpl(
     private val repo: LinkRepository,
     private val mapper: LinkMapper,
     private val shortCodeGenerator: ShortCodeGenerator,
-    private val kafka: KafkaTemplate<String, ClickEvent>
+    private val kafka: KafkaTemplate<String, LinkClickedEvent>
 ): LinkService {
 
     @Transactional
@@ -40,7 +40,7 @@ class LinkServiceImpl(
         kafka.send(
             "link-clicks",
             shortCode,
-            ClickEvent(shortCode, System.currentTimeMillis(), ip, userAgent)
+            LinkClickedEvent(shortCode, System.currentTimeMillis(), ip, userAgent)
         )
 
         return originalUrl
