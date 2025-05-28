@@ -8,6 +8,7 @@ import org.example.urlshortenerbackend.repositories.LinkRepository
 import org.example.urlshortenerbackend.utils.ShortCodeGenerator
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class LinkServiceImpl(
@@ -17,6 +18,7 @@ class LinkServiceImpl(
     private val kafka: KafkaTemplate<String, ClickEvent>
 ): LinkService {
 
+    @Transactional
     override fun createLink(request: CreateLinkRequest): LinkResponse {
         val shortCode = shortCodeGenerator.generate()
         val linkEntity = mapper.toEntity(dto = request, shortCode)
@@ -24,6 +26,7 @@ class LinkServiceImpl(
         return mapper.toLinkResponse(savedLink, url = "replace this by real url")
     }
 
+    @Transactional(readOnly = true)
     override fun getLinkInfo(shortCode: String): LinkResponse {
         val link = repo.findByShortCode(shortCode)
             ?: throw NoSuchElementException("Link with short code $shortCode not found")
@@ -43,6 +46,7 @@ class LinkServiceImpl(
         return originalUrl
     }
 
+    @Transactional
     override fun deleteLink(shortCode: String): Boolean {
         val deletedLinksCount = repo.deleteByShortCode(shortCode)
         return deletedLinksCount > 0
