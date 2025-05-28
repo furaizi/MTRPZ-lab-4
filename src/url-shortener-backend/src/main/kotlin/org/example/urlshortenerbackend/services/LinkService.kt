@@ -7,7 +7,7 @@ interface LinkService {
 
     fun createLink(request: CreateLinkRequest): LinkResponse
     fun getLinkInfo(shortCode: String): LinkResponse
-    fun resolveLink(shortCode: String): String
+    fun resolveLink(shortCode: String, ip: String, userAgent: String): String
     fun deleteLink(shortCode: String): Boolean
 
 }
