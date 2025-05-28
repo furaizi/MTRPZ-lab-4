@@ -16,7 +16,7 @@ interface LinkRepository : JpaRepository<Link, Long> {
         SELECT l.originalUrl FROM Link l
         WHERE l.shortCode = :shortCode
             AND l.isActive = true
-            AND (l.expiresAt IS NULL OR l.expiresAt > CURRENT_TIMESTAMP)
+            AND (l.expiresAt IS NULL OR l.expiresAt > :now)
     """)
     fun findOriginalUrlByShortCode(
         @Param("shortCode") shortCode: String,
