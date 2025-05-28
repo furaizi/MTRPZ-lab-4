@@ -7,8 +7,8 @@ data "aws_iam_policy_document" "lambda_policy" {
       "dynamodb:Query"
     ]
     resources = [
-      "arn:aws:dynamodb:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/ShortLinks",
-      "arn:aws:dynamodb:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/Analytics"
+      "arn:aws:dynamodb:${var.aws_region}:${var.aws_account_id}:table/ShortLinks",
+      "arn:aws:dynamodb:${var.aws_region}:${var.aws_account_id}:table/Analytics"
     ]
   }
 
@@ -32,4 +32,3 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
   role       = aws_iam_role.lambda_exec_role.name
   policy_arn = aws_iam_policy.lambda_exec_policy.arn
 }
-
