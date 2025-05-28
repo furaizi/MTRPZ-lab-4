@@ -63,5 +63,5 @@ interface LinkRepository : JpaRepository<Link, Long> {
         SET l.isActive = false
         WHERE l.shortCode = :shortCode
     """)
-    fun softDeleteByShortCode(shortCode: String): Long
+    fun setNonActive(shortCode: String): Long
 }
