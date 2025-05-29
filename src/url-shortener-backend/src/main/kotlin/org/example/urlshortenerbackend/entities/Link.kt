@@ -15,7 +15,7 @@ class Link(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    val linkId: Long,
+    val id: Long,
 
     @Column(length = 8, nullable = false, unique = true)
     val shortCode: String,
