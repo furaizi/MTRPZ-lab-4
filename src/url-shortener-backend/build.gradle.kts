@@ -4,6 +4,7 @@ plugins {
     id("org.springframework.boot") version "3.5.0"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "1.9.25"
+    id("com.google.devtools.ksp") version "2.0.0-1.0.22"
 }
 
 group = "org.example"
@@ -31,6 +32,9 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.mapstruct:mapstruct:1.6.3")
+    ksp("org.mapstruct:mapstruct-processor:1.6.3")
+    ksp("org.mapstruct.extensions.ksp:mapstruct-kotlin:1.0.2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
