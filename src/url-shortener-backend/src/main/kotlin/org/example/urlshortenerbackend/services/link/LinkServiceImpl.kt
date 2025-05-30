@@ -3,6 +3,7 @@ package org.example.urlshortenerbackend.services.link
 import org.example.urlshortenerbackend.config.KafkaProperties
 import org.example.urlshortenerbackend.dtos.CreateLinkRequest
 import org.example.urlshortenerbackend.dtos.LinkResponse
+import org.example.urlshortenerbackend.exceptions.LinkNotFoundException
 import org.example.urlshortenerbackend.mappers.LinkMapper
 import org.example.urlshortenerbackend.repositories.LinkRepository
 import org.example.urlshortenerbackend.statistics.LinkClickedEvent
@@ -35,14 +36,14 @@ class LinkServiceImpl(
     @Transactional(readOnly = true)
     override fun getLinkInfo(shortCode: String): LinkResponse {
         val link = repo.findByShortCode(shortCode)
-            ?: throw NoSuchElementException("Link with short code $shortCode not found")
+            ?: throw LinkNotFoundException(shortCode)
         val shortUrl = buildShortUrl(shortCode)
         return mapper.toLinkResponse(link, url = shortUrl)
     }
 
     override fun resolveLink(shortCode: String, ip: String, userAgent: String): String {
         val originalUrl = repo.findOriginalUrlByShortCode(shortCode)
-            ?: throw NoSuchElementException("Link with short code $shortCode not found")
+            ?: throw LinkNotFoundException(shortCode)
 
         kafka.send(
             kafkaProps.topics.linkClicked,
