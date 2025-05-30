@@ -8,7 +8,6 @@ data "aws_iam_policy_document" "lambda_policy" {
     ]
     resources = [
       "arn:aws:dynamodb:${var.aws_region}:${var.aws_account_id}:table/ShortLinks",
-      "arn:aws:dynamodb:${var.aws_region}:${var.aws_account_id}:table/Analytics"
     ]
   }
 
