@@ -14,14 +14,13 @@ import java.time.LocalDateTime
 class Link(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     val id: Long,
 
     @Column(length = 8, nullable = false, unique = true)
     val shortCode: String,
 
     @Column(nullable = false)
-    val originalUrl: String,
+    var originalUrl: String,
 
     var clicks: Long = 0L,
 
