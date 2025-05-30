@@ -20,7 +20,7 @@ resource "aws_apigatewayv2_api" "shortener_api" {
 resource "aws_lambda_function" "shorten" {
   function_name = "shorten-url"
   handler       = "com.example.ShortenHandler::handleRequest"
-  runtime       = "java11"
+  runtime       = "java21"
   role          = var.lambda_exec_role_arn
   filename      = "../build/distributions/shortener.zip"
   memory_size   = 128
@@ -41,7 +41,7 @@ resource "aws_lambda_function" "shorten" {
 resource "aws_lambda_function" "redirect" {
   function_name = "redirect-url"
   handler       = "com.example.RedirectHandler::handleRequest"
-  runtime       = "java11"
+  runtime       = "java21"
   role          = var.lambda_exec_role_arn
   filename      = "../build/distributions/shortener.zip"
   memory_size   = 128
@@ -58,7 +58,7 @@ resource "aws_lambda_function" "redirect" {
 resource "aws_lambda_function" "get_link" {
   function_name = "get-link"
   handler       = "com.example.GetLinkHandler::handleRequest"
-  runtime       = "java11"
+  runtime       = "java21"
   role          = var.lambda_exec_role_arn
   filename      = "../build/distributions/shortener.zip"
   memory_size   = 128
@@ -74,7 +74,7 @@ resource "aws_lambda_function" "get_link" {
 resource "aws_lambda_function" "get_link_stats" {
   function_name = "get-link-stats"
   handler       = "com.example.GetLinkStatsHandler::handleRequest"
-  runtime       = "java11"
+  runtime       = "java21"
   role          = var.lambda_exec_role_arn
   filename      = "../build/distributions/shortener.zip"
   memory_size   = 128
@@ -91,7 +91,7 @@ resource "aws_lambda_function" "get_link_stats" {
 resource "aws_lambda_function" "delete_link" {
   function_name = "delete-link"
   handler       = "com.example.DeleteLinkHandler::handleRequest"
-  runtime       = "java11"
+  runtime       = "java21"
   role          = var.lambda_exec_role_arn
   filename      = "../build/distributions/shortener.zip"
   memory_size   = 128
