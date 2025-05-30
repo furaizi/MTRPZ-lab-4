@@ -17,7 +17,7 @@ class LinkRedirectController(private val linkService: LinkService) {
     ): RedirectView {
         val ip = request.remoteAddr
         val userAgent = request.getHeader("User-Agent")
-        val redirectUrl = linkService.resolveLink(shortCode, ip, userAgent) // TODO: Add handling NoSuchElementException
+        val redirectUrl = linkService.resolveLink(shortCode, ip, userAgent)
 
         return RedirectView(redirectUrl)
     }

@@ -15,7 +15,7 @@ class LinkStatisticsController(private val linkStatsService: LinkStatisticsServi
     @GetMapping("/{shortCode}/stats")
     fun getLinkStatistics(@PathVariable shortCode: String)
     : ResponseEntity<LinkStatistics> {
-        val statistics = linkStatsService.getStatistics(shortCode) // TODO: Add handling NoSuchElementException
+        val statistics = linkStatsService.getStatistics(shortCode)
         return ResponseEntity.ok(statistics)
     }
 }

@@ -27,7 +27,7 @@ class LinkController(
     @GetMapping("/{shortCode}")
     fun getLinkInfo(@PathVariable shortCode: String)
     : ResponseEntity<LinkResponse> {
-        val linkResponse = linkService.getLinkInfo(shortCode) // TODO: Add handling NoSuchElementException
+        val linkResponse = linkService.getLinkInfo(shortCode)
         return ResponseEntity.ok(linkResponse)
     }
 
