@@ -2,7 +2,7 @@ package org.example.urlshortenerbackend.mappers
 
 import org.example.urlshortenerbackend.dtos.CreateLinkRequest
 import org.example.urlshortenerbackend.dtos.LinkResponse
-import org.example.urlshortenerbackend.dtos.LinkStats
+import org.example.urlshortenerbackend.dtos.LinkStatistics
 import org.example.urlshortenerbackend.entities.Link
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
@@ -14,5 +14,5 @@ interface LinkMapper {
     fun toEntity(dto: CreateLinkRequest, shortCode: String): Link
 
     fun toLinkResponse(link: Link, url: String): LinkResponse
-    fun toLinkStats(link: Link): LinkStats
+    fun toLinkStatistics(link: Link): LinkStatistics
 }

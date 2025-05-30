@@ -54,6 +54,21 @@ interface LinkRepository : JpaRepository<Link, Long> {
     """)
     fun incrementUniqueVisitors(@Param("shortCode") shortCode: String)
 
+    @Modifying
+    @Query("""
+        UPDATE Link l
+        SET l.clicks = l.clicks + :totalClicks,
+            l.uniqueVisitors = l.uniqueVisitors + :uniqueVisitors,
+            l.lastAccessedAt = :lastAccessedAt
+        WHERE l.shortCode = :shortCode
+    """)
+    fun bulkIncrementStats(
+        @Param("shortCode") shortCode: String,
+        @Param("totalClicks") totalClicks: Long,
+        @Param("uniqueVisitors") uniqueVisitors: Long,
+        @Param("lastAccessedAt") lastAccessedAt: LocalDateTime = LocalDateTime.now()
+    )
+
 
     fun deleteByShortCode(shortCode: String): Long
 
