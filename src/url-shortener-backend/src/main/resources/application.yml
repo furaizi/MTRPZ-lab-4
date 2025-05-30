@@ -1,3 +1,27 @@
 spring:
   application:
     name: url-shortener-backend
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER_URL}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: link-stats-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: org.example.urlshortenerbackend.statistics
+        spring.json.value.default.type: org.example.urlshortenerbackend.statistics.LinkClickedEvent
+    listener:
+      type: batch
+      ack-mode: batch
+      concurrency: 3
+
+app:
+  server:
+    url: ${APP_SERVER_URL}
+  kafka:
+    topics:
+      link-clicked: link-clicked

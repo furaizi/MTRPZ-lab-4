@@ -13,3 +13,4 @@ variable "shortlinks_table_arn" {
   type        = string
 }
 
+

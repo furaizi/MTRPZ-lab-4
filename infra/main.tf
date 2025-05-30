@@ -15,4 +15,3 @@ module "iam" {
   aws_region         = var.aws_region
   aws_account_id      = data.aws_caller_identity.current.account_id
   shortlinks_table_arn = module.dynamodb.shortlinks_table_arn
-}
