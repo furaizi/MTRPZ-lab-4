@@ -7,10 +7,3 @@ variable "aws_region" {
   description = "The AWS Region"
   type        = string
 }
-
-variable "shortlinks_table_arn" {
-  description = "The ARN of the ShortLinks DynamoDB table"
-  type        = string
-}
-
-
