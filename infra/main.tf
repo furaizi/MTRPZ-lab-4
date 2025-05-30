@@ -17,3 +17,11 @@ module "iam" {
   shortlinks_table_arn = module.dynamodb.shortlinks_table_arn
   analytics_table_arn  = module.dynamodb.analytics_table_arn
 }
+
+module "api" {
+  source              = "./api"
+  aws_region         = var.aws_region
+  shortlinks_table_name = module.dynamodb.shortlinks_table_name
+  analytics_table_name  = module.dynamodb.analytics_table_name
+  lambda_exec_role_arn = module.iam.lambda_exec_role_arn
+}
