@@ -13,7 +13,4 @@ variable "shortlinks_table_arn" {
   type        = string
 }
 
-variable "analytics_table_arn" {
-  description = "The ARN of the Analytics DynamoDB table"
-  type        = string
-}
+
