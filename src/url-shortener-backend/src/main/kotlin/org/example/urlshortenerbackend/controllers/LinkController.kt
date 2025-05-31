@@ -4,6 +4,7 @@ import org.example.urlshortenerbackend.dtos.CreateLinkRequest
 import org.example.urlshortenerbackend.dtos.LinkResponse
 import org.example.urlshortenerbackend.services.link.LinkService
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -31,7 +32,7 @@ class LinkController(
         return ResponseEntity.ok(linkResponse)
     }
 
-    @GetMapping("/{shortCode}")
+    @DeleteMapping("/{shortCode}")
     fun deleteLink(@PathVariable shortCode: String)
     : ResponseEntity<Void> {
         linkService.deleteLink(shortCode)
