@@ -1,15 +1,12 @@
 package org.example.urlshortenerbackend.services.link
 
-import org.example.urlshortenerbackend.config.KafkaProperties
 import org.example.urlshortenerbackend.dtos.CreateLinkRequest
 import org.example.urlshortenerbackend.dtos.LinkResponse
 import org.example.urlshortenerbackend.exceptions.LinkNotFoundException
 import org.example.urlshortenerbackend.mappers.LinkMapper
 import org.example.urlshortenerbackend.repositories.LinkRepository
-import org.example.urlshortenerbackend.statistics.LinkClickedEvent
 import org.example.urlshortenerbackend.utils.ShortCodeGenerator
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -18,8 +15,6 @@ class LinkServiceImpl(
     private val repo: LinkRepository,
     private val mapper: LinkMapper,
     private val shortCodeGenerator: ShortCodeGenerator,
-    private val kafka: KafkaTemplate<String, LinkClickedEvent>,
-    private val kafkaProps: KafkaProperties,
     @Value("\${app.server.url}")
     private val baseUrl: String
 ): LinkService {
@@ -41,15 +36,10 @@ class LinkServiceImpl(
         return mapper.toLinkResponse(link, url = shortUrl)
     }
 
+    @Transactional(readOnly = true)
     override fun resolveLink(shortCode: String, ip: String, userAgent: String): String {
         val originalUrl = repo.findOriginalUrlByShortCode(shortCode)
             ?: throw LinkNotFoundException(shortCode)
-
-        kafka.send(
-            kafkaProps.topics.linkClicked,
-            shortCode,
-            LinkClickedEvent(shortCode, System.currentTimeMillis(), ip, userAgent)
-        )
 
         return originalUrl
     }

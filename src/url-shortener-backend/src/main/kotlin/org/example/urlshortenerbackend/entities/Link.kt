@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 class Link(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Long? = null,
 
     @Column(length = 8, nullable = false, unique = true)
     val shortCode: String,

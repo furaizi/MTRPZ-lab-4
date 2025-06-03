@@ -8,5 +8,6 @@ data class LinkResponse(
     val url: String,
     val originalUrl: String,
     val expiresAt: LocalDateTime?,
-    val createdAt: LocalDateTime
+    val createdAt: LocalDateTime,
+    val isActive: Boolean
 )
