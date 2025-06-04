@@ -1,7 +1,5 @@
-version: '3.8'
-
 services:
-  app:
+  backend:
     build:
       context: ./src/url-shortener-backend
       dockerfile: Dockerfile
@@ -14,8 +12,28 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/urlshortener
       - SPRING_DATASOURCE_USERNAME=user
       - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - APP_SERVER_URL=http://localhost:8080 
+      - APP_SERVER_URL=http://localhost:8080
+
+  analyzer:
+    build:
+      context: ./src/analyzer
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=urlshortener
+    volumes:
+      - ./src/analyzer:/app
 
   db:
     image: postgres:16-alpine
