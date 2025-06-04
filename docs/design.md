@@ -129,7 +129,7 @@
 | GET    | `/links/{code}/stats` | —                           | `{ "clicks": <number>, "uniqueVisitors": <number>, ... }` | Отримання статистики переходів        |
 | DELETE | `/links/{code}`     | —                             | 204 No Content                                       | Видалення короткого посилання         |
 
-**Ключові компоненти:**
+
 - `LinkController` - REST API endpoints
 - `LinkService` - бізнес-логіка
 - `LinkRepository` - data access layer
