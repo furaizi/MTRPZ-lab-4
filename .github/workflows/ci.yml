@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+# ────────────────────────────────
+# Kotlin / Spring Boot  tests
+# ────────────────────────────────
+  kotlin-tests:
+    name: "Backend (Kotlin) tests"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️  Checkout sources
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: ☕  Set up JDK 21 + Gradle cache
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: 🧪  Run Gradle unit-tests
+        working-directory: src/url-shortener-backend
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean test --no-daemon
+
+# ────────────────────────────────
+# Python / FastAPI tests
+# ────────────────────────────────
+  python-tests:
+    name: "Analytics (Python) tests"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️  Checkout sources
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🐍  Set up Python 3.11 + pip cache
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦  Install dependencies
+        working-directory: src/analyzer
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🧪  Run pytest
+        working-directory: src/analyzer
+        run: |
+          if [ -d "tests" ] || [ -f "pytest.ini" ]; then
+            pytest -q
+          else
+            echo "⚠️  No tests found, job marked as passed."
+          fi
