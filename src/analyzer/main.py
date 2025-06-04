@@ -1,21 +1,17 @@
-"""
-URL Shortener Analytics Dashboard
-Provides real-time analytics and monitoring for the URL shortener service
-"""
 
-from fastapi import FastAPI, Request, HTTPException, Query, Depends
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
-import asyncpg
 import asyncio
-from datetime import datetime, timedelta
-from typing import List, Dict, Any, Optional
-import os
-from urllib.parse import urlparse
 import logging
+import os
 from contextlib import asynccontextmanager
+from datetime import datetime
+from typing import List, Dict, Any, Optional
+
+import asyncpg
+from fastapi import FastAPI, Request, HTTPException, Query, Depends
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 # Configure logging
 logging.basicConfig(
